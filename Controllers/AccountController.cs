@@ -67,6 +67,34 @@ public class AccountController : Controller
         }
         return RedirectToAction("Login");
     }
+    public string FindIdShoppingCart(string username)
+    {
+        string cartId = string.Empty;
+        string? connecString = _configuration.GetConnectionString("Default");
+        try
+        {
+            using (SqlConnection connecConnection = new SqlConnection(connecString))
+            {
+                connecConnection.Open();
+                using (SqlCommand cmd = new SqlCommand("select MaGioHang from GioHang as gh join Users as u on gh.MaUser = u.MaUser where TenTaiKhoan = @TenTaiKhoan ", connecConnection))
+                {
+                    cmd.Parameters.AddWithValue("@TenTaiKhoan", username);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            cartId = reader["MaGioHang"].ToString();
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+        }
+        return cartId;
+    }
     [HttpGet]
     public IActionResult Login()
     {
@@ -85,6 +113,7 @@ public class AccountController : Controller
             using (SqlConnection connection = new SqlConnection(connec))
             {
                 await connection.OpenAsync();
+                string vaitro = string.Empty;
                 using (SqlCommand command = new SqlCommand("sp_DangNhapNguoiDung", connection))
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -93,6 +122,17 @@ public class AccountController : Controller
                     var result = await command.ExecuteScalarAsync();
                     if (result != null)
                     {
+                        using (SqlCommand cmd = new SqlCommand("SELECT vaitro FROM users WHERE tentaikhoan = @username", connection))
+                        {
+                            cmd.Parameters.AddWithValue("@username", login.Username);
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    vaitro = reader["vaitro"].ToString();
+                                }
+                            }
+                        }
                         if (rememberMe)
                         {
                             var cookieOptions = new CookieOptions
@@ -103,10 +143,17 @@ public class AccountController : Controller
                             };
                             Response.Cookies.Append("username", login.Username, cookieOptions);
                             HttpContext.Session.SetString("username", login.Username);
+                            HttpContext.Session.SetString("role", vaitro);
+                            string cartIdByUser = FindIdShoppingCart(login.Username);
+                            HttpContext.Session.SetString("cartid", cartIdByUser);
                         }
                         else
                         {
                             HttpContext.Session.SetString("username", login.Username);
+                            FindIdShoppingCart(login.Username);
+                            HttpContext.Session.SetString("role", vaitro);
+                            string cartIdByUser = FindIdShoppingCart(login.Username);
+                            HttpContext.Session.SetString("cartid", cartIdByUser);
                         }
 
                         return RedirectToAction("Index", "Home");
@@ -132,6 +179,7 @@ public class AccountController : Controller
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         HttpContext.Session.Remove("username");
+        HttpContext.Session.Remove("role");
         Response.Cookies.Delete("username");
         return RedirectToAction("Index", "Home");
     }
