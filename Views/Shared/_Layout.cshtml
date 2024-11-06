@@ -90,12 +90,13 @@
                                 asp-action="Contact">Contact</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Flowers" asp-action="Flowers"
-                                id="navbarDropdown" role="button" data-bs-toggle="" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Flowers"
+                                asp-action="Flowers" id="navbarDropdown" role="button" data-bs-toggle=""
+                                aria-expanded="false">
                                 Flowers
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item"  asp-route-category="HT001" asp-controller="Flowers"
+                                <li><a class="dropdown-item" asp-route-category="HT001" asp-controller="Flowers"
                                         asp-action="FlowersByCategory">Hoa Hồng</a></li>
                                 <li><a class="dropdown-item" asp-route-category="HT002" asp-controller="Flowers"
                                         asp-action="FlowersByCategory">Hoa Cúc</a></li>
@@ -198,6 +199,9 @@
                             style="width: 60px; background-color: #7c4dff; height: 2px" />
                         <p>
                             Ở đây có tất cả loại hoa bạn cần
+                        </p>
+                        <p>
+                           <a asp-controller="Home" asp-action="Privacy">Coppy right</a>
                         </p>
                     </div>
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">

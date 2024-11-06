@@ -63,7 +63,7 @@ public class PaymentController : Controller
 
         return Json(new { success = false, message = "Không xác định được hành động." });
     }
-    
+
 
     // public async Task<IActionResult> addToCart()
     // {
@@ -108,13 +108,13 @@ public class PaymentController : Controller
     // }
     public ShoppingCart showListFlowers()
     {
-        ShoppingCart shoppingCart = new ShoppingCart(); // Tạo một đối tượng ShoppingCart
+        ShoppingCart shoppingCart = new ShoppingCart();
         var connecString = _configuration.GetConnectionString("Default");
         var maGioHang = HttpContext.Session.GetString("cartid");
 
         if (string.IsNullOrEmpty(maGioHang))
         {
-            return shoppingCart; // Trả về ShoppingCart rỗng nếu không có mã giỏ hàng
+            return shoppingCart;
         }
 
         try
@@ -140,7 +140,7 @@ public class PaymentController : Controller
                             shoppingCart.Flowers.Add(flower);
                         }
 
-                        shoppingCart.ThanhTien = shoppingCart.Flowers.Sum(f => f.GiaBan * f.SoLuong); // Tính tổng tiền
+                        shoppingCart.ThanhTien = shoppingCart.Flowers.Sum(f => f.GiaBan * f.SoLuong);
                     }
                 }
             }
@@ -153,13 +153,20 @@ public class PaymentController : Controller
         return shoppingCart; // Trả về ShoppingCart đã có hoa
     }
 
-
+    public string TaoMaHoaDon()
+    {
+        DateTime now = DateTime.Now;
+        return "HD" + now.ToString("yyyyMMddHHmmss");
+    }
+    public async Task<IActionResult> FillInfo(){
+        return View();
+    }
 
     public ActionResult ShoppingCart()
     {
         var cartList = showListFlowers();
         return View(cartList);
-    }
+    } 
     public ActionResult Payment()
     {
         return View();

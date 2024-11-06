@@ -2,6 +2,7 @@
     var username = Context.Session.GetString("username");
     var usernameCookie = Context.Request.Cookies["username"];
     var userRole = Context.Session.GetString("role");
+    var totalFlowers = Context.Session.GetInt32("totalFlowers") ?? 0;
     string asp_controller = "";
     string asp_action = "";
     string areaName = "";
@@ -38,7 +39,7 @@
             <a class="btn m-1" type="submit" asp-area="" asp-controller="Payment" asp-action="ShoppingCart">
                 <i class="fa-solid fa-cart-shopping"></i>
                 Cart
-                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                <span class="badge bg-dark text-white ms-1 rounded-pill">@totalFlowers</span>
             </a>
         </form>
     </div>

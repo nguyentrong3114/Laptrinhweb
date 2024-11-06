@@ -20,6 +20,9 @@
         height: 270px;
         width: 250px;
     }
+    .mdt-5{
+        margin-top: 20px;
+    }
 </style>
 <div class="t-20">
     <div class="row">
@@ -59,7 +62,7 @@
                                     <p class="text-muted mb-2">Price</p>
                                     <h5 class="mb-0 mt-2"><span class="text-muted me-2"><del
                                                 class="font-size-16 fw-normal"></del></span>@flower.GiaBan.ToString("C")
-                                    </h5> <!-- Giả sử bạn có thuộc tính OldPrice và GiaBan -->
+                                    </h5>
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -82,19 +85,6 @@
                 </div>
             </div>
             <!-- end card -->
-
-            <div class="row my-4">
-                <div class="col-sm-6">
-                    <a asp-area="" asp-controller="Flower" asp-action="Flower" class="btn btn-link text-muted">
-                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-                </div> <!-- end col -->
-                <div class="col-sm-6">
-                    <div class="text-sm-end mt-2 mt-sm-0">
-                        <a href="ecommerce-checkout.html" class="btn btn-success">
-                            <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="col-xl-4">
@@ -104,14 +94,12 @@
                         <h5 class="font-size-16 mb-0">Order Summary <span class="float-end">#MN0124</span></h5>
                     </div>
                     <div class="card-body p-4 pt-2">
-
                         <div class="table-responsive">
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
                                         <td>Sub Total :</td>
                                         <td class="text-end">@Model.ThanhTien.Value.ToString("C") VNĐ</td>
-
                                     </tr>
                                     <tr>
                                         <td>Discount : </td>
@@ -129,12 +117,25 @@
                                         <th>Total :</th>
                                         <td class="text-end">
                                             <span class="fw-bold">
-                                                @Model.ThanhTien.Value.ToString("C") VNĐ<!-- Tính tổng cuối cùng -->
+                                                @Model.ThanhTien.Value.ToString("C") VNĐ
                                             </span>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="d-flex mdt-5">
+                                <div class="col-sm-6">
+                                    <a asp-area="" asp-controller="Flowers" asp-action="Flowers"
+                                        class="btn btn-link text-muted">
+                                        <i class="mdi mdi-arrow-left me-1"></i>Continue</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="text-sm-end mt-sm-0">
+                                        <a asp-controller="Payment" asp-action="FillInfo" class="btn btn-success">
+                                            <i class="mdi mdi-cart-outline me-1"></i>Checkout </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

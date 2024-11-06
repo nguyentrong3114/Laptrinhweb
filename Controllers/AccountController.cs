@@ -23,6 +23,41 @@ public class AccountController : Controller
     {
         return View();
     }
+    public async Task<int> TotalFlowers()
+    {
+        int totalCount = 0;
+        var connecString = _configuration.GetConnectionString("Default");
+        var maGioHang = HttpContext.Session.GetString("cartid");
+
+        if (string.IsNullOrEmpty(maGioHang))
+        {
+            return totalCount;
+        }
+
+        try
+        {
+            using (SqlConnection sql = new SqlConnection(connecString))
+            {
+                await sql.OpenAsync();
+
+                using (SqlCommand cmd = new SqlCommand("SELECT SUM(ctgh.soluong) FROM ChiTietGioHang AS ctgh JOIN Hoa AS h ON h.MaHoa = ctgh.MaHoa WHERE ctgh.MaGioHang = @cartId", sql))
+                {
+                    cmd.Parameters.AddWithValue("@cartId", maGioHang);
+
+
+                    var result = await cmd.ExecuteScalarAsync();
+
+                    totalCount = result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+
+        return totalCount;
+    }
 
     [HttpPost]
     public async Task<ActionResult> SignUp(AccountRegister register)
@@ -98,6 +133,7 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Login()
     {
+
         return View();
     }
     [HttpPost]
@@ -146,6 +182,8 @@ public class AccountController : Controller
                             HttpContext.Session.SetString("role", vaitro);
                             string cartIdByUser = FindIdShoppingCart(login.Username);
                             HttpContext.Session.SetString("cartid", cartIdByUser);
+                            int totalFlowers = await TotalFlowers();
+                            HttpContext.Session.SetInt32("totalFlowers", totalFlowers);
                         }
                         else
                         {
@@ -154,8 +192,9 @@ public class AccountController : Controller
                             HttpContext.Session.SetString("role", vaitro);
                             string cartIdByUser = FindIdShoppingCart(login.Username);
                             HttpContext.Session.SetString("cartid", cartIdByUser);
+                            int totalFlowers = await TotalFlowers();
+                            HttpContext.Session.SetInt32("totalFlowers", totalFlowers);
                         }
-
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -175,12 +214,14 @@ public class AccountController : Controller
 
         return View("Login");
     }
+
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         HttpContext.Session.Remove("username");
         HttpContext.Session.Remove("role");
         Response.Cookies.Delete("username");
+        HttpContext.Session.Remove("totalcart");
         return RedirectToAction("Index", "Home");
     }
 }
