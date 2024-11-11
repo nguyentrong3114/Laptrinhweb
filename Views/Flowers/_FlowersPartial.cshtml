@@ -1,0 +1,211 @@
+@{
+    ViewData["Title"] = "Flowers";
+}
+@model List<Flowers>
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-secondary {
+        color: white;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .border1 {
+        border: 2px solid #0d6efd;
+        transition: border-color 0.3s ease;
+    }
+
+    .border1:hover {
+        border-color: #0b5ed7;
+    }
+
+    .alert-dropdown {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        width: 300px;
+        background-color: #0d6efd;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: none;
+    }
+
+    .alert-dropdown .alert-content {
+        font-size: 16px;
+    }
+
+    .alert-dropdown.success {
+        background-color: #28a745;
+
+    }
+
+    .alert-dropdown.error {
+        background-color: #dc3545;
+    }
+
+    .product-image-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .product-image-container img {
+        width: 100%;
+        transition: transform 0.3s ease;
+        /* Hiệu ứng phóng to ảnh khi hover */
+    }
+
+    .product-image-container:hover img {
+        transform: scale(1.1);
+        /* Phóng to ảnh khi hover */
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        /* Màu nền đen với độ mờ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .overlay-text {
+        color: white;
+        font-size: 1.5em;
+        text-decoration: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .product-image-container:hover .overlay {
+        opacity: 1;
+        /* Hiển thị overlay khi hover */
+    }
+
+    .product-image-container:hover .overlay-text {
+        opacity: 1;
+        /* Hiển thị chữ khi hover */
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        /* Đảm bảo văn bản hiển thị trên một dòng */
+        overflow: hidden;
+        /* Ẩn phần văn bản vượt quá */
+        text-overflow: ellipsis;
+    }
+
+    .product-description {}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <form asp-controller="Payment" asp-action="HandleCartActions" method="post" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="product-image-container card-img-top">
+                    <img src="@product.HinhAnh" class="card-img-top" alt="@product.TenHoa">
+                    <div class="overlay">
+                        <a asp-controller="Flowers" asp-action="FlowerDetails" asp-route-id="@product.MaHoa"
+                            class="overlay-text">
+                            See Detail
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="product-title">@product.TenHoa</h5>
+                    <p class="truncate-text product-description">@product.MoTa</p>
+                    <p class="text-danger">
+                        @product.GiaBan.ToString("#,0", new System.Globalization.CultureInfo("vi-VN"))
+                        <span>&#8363;</span>
+                    </p>
+                    <input type="hidden" name="maHoa" value="@product.MaHoa" />
+                    <input type="hidden" name="soLuong" value="1" />
+                    <div class="btn-group">
+                        <a class="btn btn-primary" type="submit" name="action" value="BuyNow" asp-controller="Payment"
+                            asp-action="BuyNow" asp-route-MaHoa="@product.MaHoa">Buy Now</a>
+                        <button class="btn border1" type="submit" name="action" value="AddToCart">
+                            <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    }
+</div>
+
+<div id="alert-dropdown" class="alert-dropdown" style="display: none;">
+    <div class="alert-content"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".btn-group button").click(function (e) {
+            e.preventDefault();
+
+            const action = $(this).val();
+            const maHoa = $(this).closest("form").find("input[name='maHoa']").val();
+            const soLuong = $(this).closest("form").find("input[name='soLuong']").val();
+
+            $.ajax({
+                url: '/Payment/HandleCartActions',
+                type: 'POST',
+                data: {
+                    action: action,
+                    maHoa: maHoa,
+                    soLuong: soLuong
+                },
+                success: function (response) {
+                    if (response.success) {
+                        showAlert(response.message, 'success');
+                    } else {
+                        showAlert(response.message, 'error');
+                    }
+                },
+                error: function () {
+                    showAlert("Đã xảy ra lỗi. Vui lòng thử lại.", 'error');
+                }
+            });
+        });
+
+        function showAlert(message, type) {
+            const alertDropdown = $('#alert-dropdown');
+            alertDropdown.removeClass('success error').addClass(type);
+            alertDropdown.find('.alert-content').text(message);
+            alertDropdown.fadeIn();
+
+            setTimeout(function () {
+                alertDropdown.fadeOut();
+            }, 3000);
+        }
+    });
+</script>
