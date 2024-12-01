@@ -1,13 +1,13 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using shopflowerproject.Models;
-
-
 using System.Data.SqlClient;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
+using System.Security.Claims;
 namespace shopflowerproject.Controllers;
 public class AccountController : Controller
 {
@@ -214,7 +214,70 @@ public class AccountController : Controller
 
         return View("Login");
     }
+    //Đăng nhập với Google
+    [HttpGet]
+    public IActionResult LoginWithGoogle()
+    {
+        var properties = new AuthenticationProperties
+        {
+            RedirectUri = Url.Action("GoogleCallback")
+        };
+        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+    }
+    [HttpGet]
+    public async Task<IActionResult> GoogleCallback()
+    {
+        var authenticateResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+        if (!authenticateResult.Succeeded)
+        {
+            return RedirectToAction("Login");
+        }
+
+        // Lấy thông tin từ Google
+        var claims = authenticateResult.Principal.Identities.FirstOrDefault()?.Claims;
+        var email = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+        var name = claims?.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+
+        if (email != null)
+        {
+            // Kiểm tra nếu email đã tồn tại trong hệ thống
+            string connecString = _configuration.GetConnectionString("Default");
+            using (SqlConnection connection = new SqlConnection(connecString))
+            {
+                await connection.OpenAsync();
+                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(1) FROM Users WHERE Email = @Email", connection))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    var count = (int)await cmd.ExecuteScalarAsync();
+
+                    if (count == 0)
+                    {
+                        // Tạo tài khoản mới nếu chưa tồn tại
+                        using (SqlCommand insertCmd = new SqlCommand("INSERT INTO Users (MaUser, HoTen, Email, TenTaiKhoan, VaiTro) VALUES (@MaUser, @Name, @Email, @Username, @Role)", connection))
+                        {
+                            string maUser = Guid.NewGuid().ToString();
+                            insertCmd.Parameters.AddWithValue("@MaUser", maUser);
+                            insertCmd.Parameters.AddWithValue("@Name", name ?? "Unknown");
+                            insertCmd.Parameters.AddWithValue("@Email", email);
+                            insertCmd.Parameters.AddWithValue("@Username", email);  // Dùng email làm username
+                            insertCmd.Parameters.AddWithValue("@Role", "User");
+
+                            await insertCmd.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
+            }
+
+            // Đăng nhập người dùng
+            HttpContext.Session.SetString("username", email);
+            HttpContext.Session.SetString("role", "User");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        return RedirectToAction("Login");
+    }
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

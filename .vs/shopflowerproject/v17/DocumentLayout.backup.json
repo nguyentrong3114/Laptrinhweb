@@ -1,12 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\maith\\Desktop\\shopflowerproject\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\DUC anh\\source\\repos\\shopflowerproject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{45D15FA9-7ABC-4A70-BF52-C6F6C1A995B9}|shopflowerproject.csproj|c:\\users\\duc anh\\source\\repos\\shopflowerproject\\areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{45D15FA9-7ABC-4A70-BF52-C6F6C1A995B9}|shopflowerproject.csproj|solutionrelative:areas\\admin\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\DUC anh\\source\\repos\\shopflowerproject\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\DUC anh\\source\\repos\\shopflowerproject\\Areas\\Admin\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Areas\\Admin\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAO4AAAAAAAAAAAAwwN0AAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T08:01:55.526Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

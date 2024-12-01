@@ -1,0 +1,724 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+@model List<shopflowerproject.Models.Users>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/fontawesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+        }
+
+        .table-responsive {
+            margin: 30px 0;
+        }
+
+        .table-wrapper {
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 3px;
+            min-width: 1000px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #435d7d;
+            color: #fff;
+            padding: 16px 30px;
+            min-width: 100%;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+            .table-title h2 {
+                margin: 5px 0 0;
+                font-size: 24px;
+            }
+
+            .table-title .btn-group {
+                float: right;
+            }
+
+            .table-title .btn {
+                color: #fff;
+                float: right;
+                font-size: 13px;
+                border: none;
+                min-width: 50px;
+                border-radius: 2px;
+                border: none;
+                outline: none !important;
+                margin-left: 10px;
+            }
+
+                .table-title .btn i {
+                    float: left;
+                    font-size: 21px;
+                    margin-right: 5px;
+                }
+
+                .table-title .btn span {
+                    float: left;
+                    margin-top: 2px;
+                }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+            table.table tr th:first-child {
+                width: 60px;
+            }
+
+            table.table tr th:last-child {
+                width: 100px;
+            }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+            table.table td a:hover {
+                color: #2196F3;
+            }
+
+            table.table td a.edit {
+                color: #FFC107;
+            }
+
+            table.table td a.delete {
+                color: #F44336;
+            }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .page-link {
+            padding: 10px 15px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+            .page-link:hover {
+                background-color: #f8f9fa;
+                border-color: #007bff;
+                color: #0056b3;
+            }
+
+            /* Active page */
+            .page-link.active {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
+
+                .page-link.active:hover {
+                    background-color: #0056b3;
+                    border-color: #0056b3;
+                }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+
+            .custom-checkbox input[type="checkbox"] {
+                opacity: 0;
+                position: absolute;
+                margin: 5px 0 0 3px;
+                z-index: 9;
+            }
+
+            .custom-checkbox label:before {
+                width: 18px;
+                height: 18px;
+            }
+
+            .custom-checkbox label:before {
+                content: '';
+                margin-right: 10px;
+                display: inline-block;
+                vertical-align: text-top;
+                background: white;
+                border: 1px solid #bbb;
+                border-radius: 2px;
+                box-sizing: border-box;
+                z-index: 2;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 3px;
+                width: 6px;
+                height: 11px;
+                border: solid #000;
+                border-width: 0 3px 3px 0;
+                transform: inherit;
+                z-index: 3;
+                transform: rotateZ(45deg);
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:before {
+                border-color: #03A9F4;
+                background: #03A9F4;
+            }
+
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                border-color: #fff;
+            }
+
+            .custom-checkbox input[type="checkbox"]:disabled + label:before {
+                color: #b8b8b8;
+                cursor: auto;
+                box-shadow: none;
+                background: #ddd;
+            }
+        /* Modal styles */
+        .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+            padding: 20px 30px;
+        }
+
+        .modal .modal-content {
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .modal .modal-title {
+            display: inline-block;
+        }
+
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+
+        .modal .btn {
+            border-radius: 2px;
+            min-width: 100px;
+        }
+
+        .modal form label {
+            font-weight: normal;
+        }
+
+        .modal-content {
+            border-radius: 35px;
+        }
+        /*Validation*/
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            // Activate tooltip
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            $('#selectAll').click(function () {
+                if ($(this).prop('checked')) {
+                    $('input[name="selectedItems"]').prop('checked', true);
+                }
+                else {
+                    $('input[name="selectedItems"]').prop('checked', false);
+                }
+            });
+
+            $('input[name="selectedItems"]').click(function () {
+                if (!$(this).prop('checked')) {
+                    $('#selectAll').prop('checked', false);
+                }
+            });
+
+            $('#deleteSelectedBtn').click(function () {
+                var selected = [];
+                $('input[name="selectedItems"]:checked').each(function () {
+                    selected.push($(this).val());
+                });
+
+                if (selected.length > 0) {
+                    $('#deleteSelectedIds').val(JSON.stringify(selected));
+                    $('#deleteSelectedModal').modal('show');
+                }
+                else {
+                    alert('Vui lòng chọn ít nhất một dòng để xóa.');
+                }
+            });
+
+            $('#editUserModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Lấy đối tượng đã click (icon Edit)
+                var userId = button.data('id'); // Lấy ID của user từ data-id
+
+                $.ajax({
+                    url: '/Admin/Users/Edit/' + userId, // URL của action Edit
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        // Điền dữ liệu vào form
+                        $('#MaUser').val(data.maUser);
+                        $('#HoTen').val(data.hoTen);
+                        $('#Email').val(data.email);
+                        $('#TenTaiKhoan').val(data.tenTaiKhoan);
+                        $('#SoDienThoai').val(data.soDienThoai);
+                        $('#DiaChi').val(data.diaChi);
+                        $('#GioiTinh').val(data.gioiTinh);
+                        $('#NgaySinh').val(data.ngaySinh);
+                        //$('#NgaySinh').val(data.ngaySinh ? new Date(data.ngaySinh).toISOString().split('T')[0] : '');
+                        $('#VaiTro').val(data.vaiTro);
+                        $('#NgayDangKy').val(data.ngayDangKy);
+                        //$('#NgayDangKy').val(data.ngayDangKy ? new Date(data.ngayDangKy).toISOString().split('T')[0] :
+                        $('#IdFacebook').val(data.idFacebook);
+                        $('#IdGoogle').val(data.idGoogle);
+                    },
+
+                    error: function () {
+                        alert('Không thể tải dữ liệu cho người dùng.');
+                    }
+                });
+            });
+
+            $('#deleteUserModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Lấy đối tượng đã click (icon Delete)
+                var userId = button.data('id'); // Lấy ID của người dùng từ data-id
+                $('#deleteUserId').val(userId); // Gán ID vào input hidden trong form
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <h2>Quản lý <b>người dùng</b></h2>
+                            </div>
+                            <div class="col-sm-6 d-flex flex-column align-items-end">
+                                <form method="get" class="form-inline mb-2" style="width: 100%;">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm tên người dùng..."
+                                               value="@Context.Request.Query["keyword"]" />
+                                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                                    </div>
+                                </form>
+                                @* <a href="#addUserModal" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                    <i class="material-icons">&#xE147;</i>
+                                    <span>Thêm người dùng mới</span>
+                                </a> *@
+                                <a href="javascript:void(0);" id="deleteSelectedBtn" class="btn btn-danger">
+                                    <i class="material-icons">&#xE15C;</i>
+                                    <span>Xoá đã chọn</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="selectAll">
+                                    <label for="selectAll"></label>
+                                </span>
+                            </th>
+                            <th>
+                                <a href="@Url.Action("Index", new { page = ViewBag.CurrentPage, sortOrder = ViewBag.SortOrder == "tentk_asc" ? "tentk_desc" : "tentk_asc", keyword = ViewBag.Keyword })">Tên tài khoản</a>
+                                @if (ViewBag.SortOrder == "tentk_asc")
+                                {
+                                    <span>&#9650;</span>
+                                }
+                                else if (ViewBag.SortOrder == "tentk_desc")
+                                {
+                                    <span>&#9660;</span>
+                                }
+                            </th>
+                            <th>Họ Tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Vai trò</th>
+                            <th>Ngày đăng ký</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox@item.MaUser" name="selectedItems" value="@item.MaUser">
+                                        <label for="checkbox@item.MaUser"></label>
+                                    </span>
+                                </td>
+                                <td>@item.TenTaiKhoan</td>
+                                <td>@item.HoTen</td>
+                                <td>@item.Email</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.VaiTro</td>
+                                @* <td>@item.NgayDangKy</td> *@
+                                <td>@Convert.ToDateTime(@item.NgayDangKy).ToString("dd-MM-yyyy")</td>
+                                <td>
+                                    <a href="#editUserModal" class="edit" data-bs-toggle="modal" data-bs-target="#editUserModal" data-id="@item.MaUser">
+                                        <i class="material-icons" data-bs-toggle="tooltip" title="Sửa">&#xE254;</i>
+                                    </a>
+                                    <a href="#deleteUserModal" class="delete" data-bs-toggle="modal" data-id="@item.MaUser">
+                                        <i class="material-icons" data-bs-toggle="tooltip" title="Xoá">&#xE872;</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <!-- Previous Button -->
+                @if (ViewBag.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?page=@(ViewBag.CurrentPage - 1)&sortOrder=@ViewBag.SortOrder&keyword=@ViewBag.Keyword">Prev</a>
+                    </li>
+                }
+                @*
+                <!-- Page 1 and Page 2 -->
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "active" : "")">
+                <a class="page-link" href="?page=1&sortOrder=@ViewBag.SortOrder">1</a>
+                </li>
+                @if (ViewBag.TotalPages >= 2)
+                {
+                <li class="page-item @(ViewBag.CurrentPage == 2 ? "active" : "")">
+                <a class="page-link" href="?page=2&sortOrder=@ViewBag.SortOrder">2</a>
+                </li>
+                }
+
+                <!-- Dots if current page is far from the first two pages -->
+                @if (ViewBag.CurrentPage > 4)
+                {
+                <li class="page-item disabled">
+                <span class="page-link">...</span>
+                </li>
+                }
+
+                <!-- Middle Pages (up to 3 pages around the current page) -->
+                @for (int i = ViewBag.CurrentPage - 1; i <= ViewBag.CurrentPage + 1; i++)
+                {
+                if (i > 2 && i < ViewBag.TotalPages - 1) // Avoid duplication with first two and last two pages
+                {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" href="?page=@i&sortOrder=@ViewBag.SortOrder">@i</a>
+                </li>
+                }
+                }
+
+                <!-- Dots if current page is far from the last two pages -->
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages - 3)
+                {
+                <li class="page-item disabled">
+                <span class="page-link">...</span>
+                </li>
+                }
+
+                <!-- Last two pages -->
+                @if (ViewBag.TotalPages > 2)
+                {
+                <li class="page-item @(ViewBag.CurrentPage == (ViewBag.TotalPages - 1) ? "active" : "")">
+                <a class="page-link" href="?page=@(ViewBag.TotalPages - 1)&sortOrder=@ViewBag.SortOrder">@((ViewBag.TotalPages - 1))</a>
+                </li>
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "active" : "")">
+                <a class="page-link" href="?page=@ViewBag.TotalPages&sortOrder=@ViewBag.SortOrder">@ViewBag.TotalPages</a>
+                </li>
+                }
+                *@
+                <!-- Page Buttons -->
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                        <a class="page-link" href="?page=@i&sortOrder=@ViewBag.SortOrder&keyword=@ViewBag.Keyword">@i</a>
+                    </li>
+                }
+
+                <!-- Next Button -->
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?page=@(ViewBag.CurrentPage + 1)&sortOrder=@ViewBag.SortOrder&keyword=@ViewBag.Keyword">Next</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <!-- Create Modal HTML -->
+    @* <div id="addFlowerModal" class="modal fade">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form asp-action="Create" asp-controller="Flowers" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Flower</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="MaHoa">Mã hoa</label>
+                            <input asp-for="flw.MaHoa" class="form-control" />
+                            @Html.ValidationMessageFor(row => row.flw.MaHoa)
+                        </div>
+                        <div class="form-group">
+                            <label for="TenHoa">Tên hoa</label>
+                            <input asp-for="flw.TenHoa" class="form-control" />
+                            @Html.ValidationMessageFor(row => row.flw.TenHoa)
+                        </div>
+                        <div class="form-group">
+                            <label for="MaDanhMuc">Danh mục</label>
+                            <select asp-for="flw.MaDanhMuc" class="form-control">
+                                <option value="">Chọn danh mục</option>
+                                @foreach (var category in ViewBag.FlowerCategory)
+                                {
+                                    <option value="@category.MaDanhMuc">@category.TenDanhMuc</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(row => row.flw.MaDanhMuc)
+                        </div>
+                        <div class="form-group">
+                            <label for="MaHoaTuoi">Loại hoa</label>
+                            <select asp-for="flw.MaHoaTuoi" class="form-control">
+                                <option value="">Chọn loại hoa</option>
+                                @foreach (var type in ViewBag.FlowerType)
+                                {
+                                    <option value="@type.MaHoaTuoi">@type.TenHoaTuoi</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(row => row.flw.MaHoaTuoi)
+                        </div>
+                        <div class="form-group">
+                            <label for="GiaBan">Giá bán</label>
+                            <input asp-for="flw.GiaBan" class="form-control" />
+                            @Html.ValidationMessageFor(row => row.flw.GiaBan)
+                        </div>
+                        <div class="form-group">
+                            <label for="MoTa">Mô tả</label>
+                            <textarea asp-for="flw.MoTa" class="form-control" rows="5"></textarea>
+                            @Html.ValidationMessageFor(row => row.flw.MoTa)
+                        </div>
+                        <div class="form-group">
+                            <label for="HinhAnh">Hình ảnh</label>
+                            <input type="file" name="HinhAnh" class="form-control" />
+                            @Html.ValidationMessageFor(row => row.flw.HinhAnh)
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Huỷ</button>
+                        <button type="submit" class="btn btn-success">Thêm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> *@
+    <!-- Edit Modal HTML -->
+    <div id="editUserModal" class="modal fade">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <form id="editUserForm" asp-action="Edit" asp-controller="Users" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit User</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="MaUser">Mã người dùng</label>
+                            <input type="text" id="MaUser" name="MaUser" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="HoTen">Tên người dùng</label>
+                            <input type="text" id="HoTen" name="HoTen" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            <input type="text" id="Email" name="Email" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="TenTaiKhoan">Tên tài khoản</label>
+                            <input type="text" id="TenTaiKhoan" name="TenTaiKhoan" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="SoDienThoai">Số điện thoại</label>
+                            <input type="text" id="SoDienThoai" name="SoDienThoai" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="DiaChi">Địa chỉ</label>
+                            <textarea id="DiaChi" name="DiaChi" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="GioiTinh">Giới tính</label>
+                            <select id="GioiTinh" name="GioiTinh" class="form-control">
+                                <option value="">Chọn giới tính</option>
+                                <option value="NAM">Nam</option>
+                                <option value="NỮ">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="NgaySinh">Ngày sinh</label>
+                            <input type="date" id="NgaySinh" name="NgaySinh" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="VaiTro">Vai trò</label>
+                            <select id="VaiTro" name="VaiTro" class="form-control">
+                                <option value="">Chọn vai trò</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Manager">Manager</option>
+                                <option value="User">User</option>
+                            </select>
+                        </div>
+                        <div class="form-group"> 
+                            <label for="NgayDangKy">Ngày đăng ký</label>
+                            <input type="date" id="NgayDangKy" name="NgayDangKy" class="form-control" readonly /> 
+                        </div>
+                        <div class="form-group">
+                            <label for="IdFacebook">Facebook</label>
+                            <input type="text" id="IdFacebook" name="IdFacebook" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="IdGoogle">Google</label>
+                            <input type="text" id="IdGoogle" name="IdGoogle" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Huỷ</button>
+                        <input type="submit" class="btn btn-info" value="Lưu">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal HTML -->
+    <div id="deleteUserModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="deleteUserForm" asp-action="Delete" asp-controller="Users" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete User</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có chắc chắn muốn xóa người dùng này không?</p>
+                        <p class="text-warning"><small>Hành động này không thể hoàn tác.</small></p>
+                        <input type="hidden" id="deleteUserId" name="id" value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Huỷ</button>
+                        <input type="submit" class="btn btn-danger" value="Xoá">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Selected Modal HTML -->
+    <div id="deleteSelectedModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="deleteSelectedForm" asp-action="DeleteSelected" asp-controller="Users" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-header">
+                        <h4 class="modal-title">Delete Selected Users</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có chắc chắn muốn xóa các dòng đã chọn không?</p>
+                        <p class="text-warning"><small>Hành động này không thể hoàn tác.</small></p>
+                        <input type="hidden" id="deleteSelectedIds" name="selectedIds" value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Huỷ</button>
+                        <input type="submit" class="btn btn-danger" value="Xoá">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
