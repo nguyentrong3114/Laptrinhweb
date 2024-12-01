@@ -1,36 +1,117 @@
 @{
-    ViewData["Title"] = "FlowersByOccasion";
+    ViewData["Title"] = @ViewData["CategoryName"];
 }
 @model List<Flowers>
 <style>
-        .card-img-top {
-            width: 100%;
-            height: 250px;
-            object-fit: cover; 
-        }
-        .product-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .product-description {
-        }
-    </style>
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Our Products</h1>
-    <div class="row">
+    .card-img-top {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
 
-        @foreach (var product in Model) {
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="@product.HinhAnh" class="card-img-top" alt="@product.TenHoa">
-                    <div class="card-body">
-                        <h5 class="product-title">@product.TenHoa</h5>
-                        <p class="product-description">@product.MoTa</p>
-                        <p class="text-danger">@product.GiaBan.ToString("C")</p> <!-- Hiển thị giá sản phẩm -->
-                        <a asp-controller="Flowers" asp-action="FlowerDetails" asp-route-id="@product.MaHoa" class="btn btn-primary">See Details</a>
-                    </div>
-                </div>
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .product-image-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .product-image-container img {
+        width: 100%;
+        transition: transform 0.3s ease;
+        /* Hiệu ứng phóng to ảnh khi hover */
+    }
+
+    .product-image-container:hover img {
+        transform: scale(1.1);
+        /* Phóng to ảnh khi hover */
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        /* Màu nền đen với độ mờ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .overlay-text {
+        color: white;
+        font-size: 1.5em;
+        text-decoration: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .product-image-container:hover .overlay {
+        opacity: 1;
+        /* Hiển thị overlay khi hover */
+    }
+
+    .product-image-container:hover .overlay-text {
+        opacity: 1;
+        /* Hiển thị chữ khi hover */
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        /* Đảm bảo văn bản hiển thị trên một dòng */
+        overflow: hidden;
+        /* Ẩn phần văn bản vượt quá */
+        text-overflow: ellipsis;
+    }
+
+    .product-description {}
+</style>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">@ViewData["OccasionName"]</h1>
+    <form id="sortForm" asp-area="" asp-controller="Flowers" asp-action="SortFlowersByOccasion" method="POST">
+        <div class="d-flex my-2">
+            <div>
+                <select class="form-select" name="priceSort" aria-label="Default select example">
+                    <option value="0" selected>Price</option>
+                    <option value="1">Từ thấp đến cao</option>
+                    <option value="2">Từ cao đến thấp</option>
+                </select>
             </div>
-        }
+            <input type="hidden" name="Occasion" value="@ViewData["OccasionName"]" />
+            <div>
+                <button type="submit" class="btn btn-primary ms-2">Apply</button>
+            </div>
+        </div>
+    </form>
+    <div id="flowerContainer">
+        @Html.Partial("_FlowersPartial", Model)
     </div>
 </div>
+<script>
+    $('#sortForm').submit(function (e) {
+        e.preventDefault();
+        var priceSort = $("select[name='priceSort']").val();
+        var occasion = $("input[name='Occasion']").val();
+
+        $.ajax({
+            url: '@Url.Action("SortFlowersByOccasion", "Flowers")',
+            type: 'POST',
+            data: { Occasion: occasion, priceSort: priceSort },
+            success: function (result) {
+                $('#flowerContainer').html(result);
+            },
+            error: function () {
+                console.error('Có lỗi khi tải danh sách hoa.');
+            }
+        });
+    });
+</script>

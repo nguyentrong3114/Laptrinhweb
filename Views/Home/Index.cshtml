@@ -3,8 +3,8 @@
 }
 <style>
     .w1000 {
-        width: 1000px;
-
+        width: 1200px;
+        height: 658px;
     }
 
     .img {
@@ -16,9 +16,38 @@
     }
 </style>
 <div class="container p-2 w-100">
-    <div class="Banner d-flex align-content-center justify-content-around">
-        <img src="https://drive.google.com/thumbnail?id=1Xm47ruMnYq7RIvRz3Q-wGH_yHnQezgqT" alt="Banner"
-            class="w1000 img-thumbnail">
+    <div id="bannerCarousel" class="carousel slide Banner d-flex align-content-center justify-content-around"
+        data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img src="https://i.ibb.co/vzxV0nm/Purple-Floral-Sale-Flower-Shop-B.png" alt="Banner 1"
+                    class="w1000 img-thumbnail">
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/nfCY8BW/Screenshot-2024-11-09-124152.png" alt="Banner 2"
+                    class="w1000 img-thumbnail">
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/9h6Whpp/22.png" alt="Banner 3" class="w1000 img-thumbnail">
+            </div>
+            <!-- Slide 4 -->
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/9WJ81yW/image-1325x658.png" alt="Banner 4" class="w1000 img-thumbnail">
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
     <div class="text-center p-3">
         <h1>Hot Product</h1>
@@ -37,21 +66,21 @@
             </div>
             <div class="col-md-3 col-sm-6 m-4">
                 <div class="text-center">
-                    <img src="https://i.ibb.co/V38RX45/Tulip-Love-Hoa-Tu-Lip-Cuoi.jpg"
+                    <img src="https://hoayeuthuong.com/hinh-hoa-tuoi/thumb/bo-hoa-tuoi/15296_cam-tu-cau-va-em.jpg"
                         alt="Say You Do" class="img-fluid">
                 </div>
                 <div class="Details-flower text-center">
-                    <h5>Will You Merry Me ?</h5>
+                    <h5>Say You Do</h5>
                     <p>200.000 đ</p>
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 m-4">
                 <div class="text-center">
-                    <img src="https://hoayeuthuong.com/hinh-hoa-tuoi/thumb/hoa-khuyen-mai/15327_forever-yours.jpg"
+                    <img src="https://hoayeuthuong.com/hinh-hoa-tuoi/thumb/bo-hoa-tuoi/15296_cam-tu-cau-va-em.jpg"
                         alt="Say You Do" class="img-fluid">
                 </div>
                 <div class="Details-flower text-center">
-                    <h5>R.I.P</h5>
+                    <h5>Say You Do</h5>
                     <p>200.000 đ</p>
                 </div>
             </div>
@@ -70,7 +99,9 @@
             <div class="p-4 p-lg-5 bg-light rounded-3 text-center img">
                 <div class="m-4 m-lg-5">
                     <h1 class="display-5 fw-bold">Welcome To Our Shop</h1>
-                    <p class="fs-4 text-blue">Cửa hàng bán hoa tươi của chúng tôi cung cấp đa dạng các loại hoa với thiết kế tinh tế, dịch vụ giao hàng nhanh chóng và tiện lợi, giúp bạn dễ dàng gửi gắm thông điệp yêu thương đến người thân yêu.</p>
+                    <p class="fs-4 text-blue">Cửa hàng bán hoa tươi của chúng tôi cung cấp đa dạng các loại hoa với
+                        thiết kế tinh tế, dịch vụ giao hàng nhanh chóng và tiện lợi, giúp bạn dễ dàng gửi gắm thông điệp
+                        yêu thương đến người thân yêu.</p>
                     <a class="btn btn-primary btn-lg" href="#!">Xem Sản Phẩm</a>
                 </div>
             </div>

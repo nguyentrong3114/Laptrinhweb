@@ -222,6 +222,7 @@ public class AccountController : Controller
         HttpContext.Session.Remove("role");
         Response.Cookies.Delete("username");
         HttpContext.Session.Remove("totalcart");
+        HttpContext.Session.Remove("cartid");
         return RedirectToAction("Index", "Home");
     }
 }
