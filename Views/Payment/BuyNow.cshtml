@@ -6,6 +6,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
     integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
@@ -349,8 +350,10 @@
                                                 <div data-bs-toggle="collapse">
                                                     <label class="card-radio-label mb-0">
                                                         <input type="radio" name="address" id="info-address1"
+
                                                             class="card-radio-input card-radio-input-delivery"
                                                             checked="" value="25000">
+
                                                         <div class="card-radio text-truncate p-3">
                                                             <span class="fs-14 mb-4 d-block">Giao Hàng Tiết Kiệm</span>
                                                             <span class="fs-14 mb-2 d-block">Giá rẻ tiết kiệm</span>
@@ -368,8 +371,10 @@
                                                 <div>
                                                     <label class="card-radio-label mb-0">
                                                         <input type="radio" name="address" id="info-address2"
+
                                                             class="card-radio-input card-radio-input-delivery"
                                                             value="50000">
+
                                                         <div class="card-radio text-truncate p-3">
                                                             <span class="fs-14 mb-4 d-block">Giao Hỏa Tốc</span>
                                                             <span class="fs-14 mb-2 d-block">Giao nhanh trong
@@ -470,11 +475,13 @@
                                 @foreach (var flower in Model.Flowers)
                                 {
                                     <tr>
+
                                         <th scope="row"><img src="@flower.HinhAnh" alt="@flower.MaHoa" title="product-img"
                                                 class="avatar-lg rounded"></th>
                                         <td>
                                             <h5 class="font-size-16 text-truncate"><a href="#"
                                                     class="text-dark">@flower.TenHoa @flower.MaHoa</a></h5>
+
                                             @* <p class="text-muted mb-0">
                                         <i class="bx bxs-star text-warning"></i>
                                         <i class="bx bxs-star text-warning"></i>
@@ -487,6 +494,7 @@
                                         </td>
                                         <td>@flower.GiaBan VNĐ</td>
                                     </tr>
+
 
                                     <tr>
                                         <td colspan="2">
@@ -533,6 +541,7 @@
                                                 value="@(Model.ThanhTien + Model.ThanhToan)" />
                                         </td>
                                     </tr>
+
                                 }
                             </tbody>
 
@@ -558,6 +567,7 @@
     </div>
 </div>
 <script>
+
     document.addEventListener('DOMContentLoaded', function () {
         const checkedRadio = document.querySelector('.card-radio-input-delivery:checked');
         const MaHoa = document.querySelector('#MaHoa123') ? document.querySelector('#MaHoa123').value : null;
@@ -601,5 +611,6 @@ function updateTotalAmount(MaHoa, shippingCost) {
         }
     });
 }
+
 
 </script>
