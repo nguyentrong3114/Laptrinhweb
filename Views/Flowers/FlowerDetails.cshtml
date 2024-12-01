@@ -1,15 +1,47 @@
 @{
     ViewData["Title"] = "FlowerDetails";
 }
+@{
+    var username = Context.Session.GetString("username");
+    var usernameCookie = Context.Request.Cookies["username"];
+}
 @model Flowers
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
     .max-height-flower {
         height: 700px;
         object-fit: cover;
     }
+
+    .alert-dropdown {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        width: 300px;
+        background-color: #0d6efd;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        display: none;
+    }
+
+    .alert-dropdown .alert-content {
+        font-size: 16px;
+    }
+
+    .alert-dropdown.success {
+        background-color: #28a745;
+
+    }
+
+    .alert-dropdown.error {
+        background-color: #dc3545;
+    }
 </style>
 <section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
+    <form asp-controller="Payment" asp-action="HandleCartActions" method="post" class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
                 <img class="max-height-flower card-img-top mb-5 mb-md-0" src="@Model.HinhAnh" alt="Lỗi" />
@@ -18,19 +50,105 @@
                 <div class="small mb-1">@Model.MaHoa</div>
                 <h1 class="display-5 fw-bolder">@Model.TenHoa</h1>
                 <div class="fs-5 mb-5">
-                    <span class="">@Model.GiaBan VNĐ</span>
+                    <span class="">@Model.GiaBan.ToString("#,0", new System.Globalization.CultureInfo("vi-VN"))
+                        <span>&#8363;</span>
                 </div>
                 <p class="lead">@Model.MoTa</p>
-                <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
-                        style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Add to cart
-                    </button>
-                </div>
+                @if (!string.IsNullOrEmpty(username) || !string.IsNullOrEmpty(usernameCookie))
+                {
+                    <div class="d-flex">
+                        <input class="form-control text-center me-3" id="quantityInput" data-mahoa="@Model.MaHoa" value="@Model.SoLuong"
+                            type="number" style="max-width: 4rem" min="0"/>
+                        <input type="hidden" name="maHoa" value="@Model.MaHoa" />
+                        <div class="btn-group">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit" name="action"
+                                value="AddToCart">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                Add to cart
+                            </button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <a class="btn btn-primary" type="submit" name="action" value="BuyNow" asp-controller="Payment"
+                        asp-action="BuyNow" asp-route-MaHoa="@Model.MaHoa">Buy Now</a>
+                }
+
             </div>
         </div>
-    </div>
+    </form>
 </section>
-<!-- Related items section-->
+<div id="alert-dropdown" class="alert-dropdown" style="display: none;">
+    <div class="alert-content"></div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".btn-group button").click(function (e) {
+            e.preventDefault();
+
+            const action = $(this).val();
+            const maHoa = $(this).closest("form").find("input[name='maHoa']").val();
+            const soLuong = $(this).closest("form").find("input[name='soLuong']").val();
+
+            $.ajax({
+                url: '/Payment/HandleCartActions',
+                type: 'POST',
+                data: {
+                    action: action,
+                    maHoa: maHoa,
+                    soLuong: soLuong
+                },
+                success: function (response) {
+                    if (response.success) {
+                        showAlert(response.message, 'success');
+                    } else {
+                        showAlert(response.message, 'error');
+                    }
+                },
+                error: function () {
+                    showAlert("Đã xảy ra lỗi. Vui lòng thử lại.", 'error');
+                }
+            });
+        });
+
+        function showAlert(message, type) {
+            const alertDropdown = $('#alert-dropdown');
+            alertDropdown.removeClass('success error').addClass(type);
+            alertDropdown.find('.alert-content').text(message);
+            alertDropdown.fadeIn();
+
+            setTimeout(function () {
+                alertDropdown.fadeOut();
+            }, 3000);
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const quantityInput = document.querySelector('#quantityInput');
+
+        quantityInput.addEventListener('change', function () {
+            const newQuantity = quantityInput.value;
+            const maHoa = quantityInput.getAttribute('data-mahoa');
+
+            updateQuantity(maHoa, newQuantity);
+        });
+    });
+    function updateQuantity(maHoa, newQuantity) {
+        $.ajax({
+            url: '@Url.Action("UpdateFlowerQuantityAddToCart", "Payment")',
+            type: 'POST',
+            data: { MaHoa: maHoa, SoLuong: newQuantity },
+            success: function (response) {
+                if (response.success) {
+                    console.log('Số lượng đã được cập nhật thành công');
+                } else {
+                    alert('Có lỗi khi cập nhật số lượng: ' + response.message);
+                }
+            },
+            error: function (error) {
+                console.log('Có lỗi khi cập nhật số lượng.', error);
+            }
+        }); 
+    }
+
+</script>

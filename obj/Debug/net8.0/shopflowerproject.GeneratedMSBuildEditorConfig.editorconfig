@@ -26,12 +26,24 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\maith\Desktop\shopflowerproject
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/maith/Desktop/shopflowerproject/Areas/Admin/Views/HomeAdmin/Charts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXENoYXJ0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/maith/Desktop/shopflowerproject/Areas/Admin/Views/HomeAdmin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/maith/Desktop/shopflowerproject/Areas/Admin/Views/HomeAdmin/ManageAccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXE1hbmFnZUFjY291bnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/maith/Desktop/shopflowerproject/Areas/Admin/Views/HomeAdmin/ManageAccountAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXE1hbmFnZUFjY291bnRBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maith/Desktop/shopflowerproject/Areas/Admin/Views/HomeAdmin/ManageFlowers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZUFkbWluXE1hbmFnZUZsb3dlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/maith/Desktop/shopflowerproject/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml]
@@ -70,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWduVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/maith/Desktop/shopflowerproject/Views/Flowers/Find.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxvd2Vyc1xGaW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/maith/Desktop/shopflowerproject/Views/Flowers/FlowerDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxvd2Vyc1xGbG93ZXJEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -84,6 +100,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/maith/Desktop/shopflowerproject/Views/Flowers/FlowersByOccasion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxvd2Vyc1xGbG93ZXJzQnlPY2Nhc2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maith/Desktop/shopflowerproject/Views/Flowers/SortFlowersByCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxvd2Vyc1xTb3J0Rmxvd2Vyc0J5Q2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maith/Desktop/shopflowerproject/Views/Flowers/_FlowersPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxvd2Vyc1xfRmxvd2Vyc1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/maith/Desktop/shopflowerproject/Views/Home/AboutUs.cshtml]
@@ -106,6 +130,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/maith/Desktop/shopflowerproject/Views/Payment/BuyNow.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxCdXlOb3cuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/maith/Desktop/shopflowerproject/Views/Payment/FillInfo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxGaWxsSW5mby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -116,6 +144,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/maith/Desktop/shopflowerproject/Views/Payment/ShoppingCart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxTaG9wcGluZ0NhcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/maith/Desktop/shopflowerproject/Views/Payment/Success.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxTdWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/maith/Desktop/shopflowerproject/Views/Shared/Error.cshtml]

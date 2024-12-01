@@ -66,80 +66,106 @@
         background-color: #dc3545;
     }
 
+    .product-image-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .product-image-container img {
+        width: 100%;
+        transition: transform 0.3s ease;
+        /* Hiệu ứng phóng to ảnh khi hover */
+    }
+
+    .product-image-container:hover img {
+        transform: scale(1.1);
+        /* Phóng to ảnh khi hover */
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        /* Màu nền đen với độ mờ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .overlay-text {
+        color: white;
+        font-size: 1.5em;
+        text-decoration: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .product-image-container:hover .overlay {
+        opacity: 1;
+        /* Hiển thị overlay khi hover */
+    }
+
+    .product-image-container:hover .overlay-text {
+        opacity: 1;
+        /* Hiển thị chữ khi hover */
+    }
+
+    .truncate-text {
+        white-space: nowrap;
+        /* Đảm bảo văn bản hiển thị trên một dòng */
+        overflow: hidden;
+        /* Ẩn phần văn bản vượt quá */
+        text-overflow: ellipsis;
+    }
+
     .product-description {}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Our Products</h1>
-    <div class="row">
+<div class="container mt-5 ">
+    <h1 class="text-center mb-4">Danh sách Hoa</h1>
+    <form id="sortForm" asp-controller="Flowers" asp-action="SortFlowers" method="POST">
+        <div class="d-flex my-2">
+            <div>
+                <select class="form-select" name="priceSort" aria-label="Default select example">
+                    <option value="0" selected>Price</option>
+                    <option value="1">Từ thấp đến cao</option>
+                    <option value="2">Từ cao đến thấp</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary ms-2">Apply</button>
+            </div>
+        </div>
+    </form>
 
-        @foreach (var product in Model)
-        {
-            <form asp-controller="Payment" asp-action="HandleCartActions" method="post"
-                class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                <div class="card">
-                    <img src="@product.HinhAnh" class="card-img-top" alt="@product.TenHoa">
-                    <div class="card-body">
-                        <h5 class="product-title">@product.TenHoa</h5>
-                        <p class="product-description">@product.MoTa</p>
-                        <p class="text-danger">@product.GiaBan.ToString("C")</p>
-                        <input type="hidden" name="maHoa" value="@product.MaHoa" />
-                        <input type="hidden" name="soLuong" value="1" />
-                        <div class="btn-group">
-                            <button class="btn btn-primary" type="submit" name="action" value="BuyNow">Buy Now</button>
-                            <button class="btn border1" type="submit" name="action" value="AddToCart">
-                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        }
+    <div id="flowerContainer">
+        @Html.Partial("_FlowersPartial", Model)
     </div>
 </div>
-<div id="alert-dropdown" class="alert-dropdown" style="display: none;">
-    <div class="alert-content"></div>
-</div>
+
 <script>
-    $(document).ready(function () {
-        $(".btn-group button").click(function (e) {
-            e.preventDefault();
 
-            const action = $(this).val();
-            const maHoa = $(this).closest("form").find("input[name='maHoa']").val();
-            const soLuong = $(this).closest("form").find("input[name='soLuong']").val();
+    $('#sortForm').submit(function (e) {
+        e.preventDefault(); 
+        var priceSort = $("select[name='priceSort']").val();
 
-            $.ajax({
-                url: '/Payment/HandleCartActions',
-                type: 'POST',
-                data: {
-                    action: action,
-                    maHoa: maHoa,
-                    soLuong: soLuong
-                },
-                success: function (response) {
-                    if (response.success) {
-                        showAlert(response.message, 'success');
-                    } else {
-                        showAlert(response.message, 'error');
-                    }
-                },
-                error: function () {
-                    showAlert("Đã xảy ra lỗi. Vui lòng thử lại.", 'error');
-                }
-            });
+        $.ajax({
+            url: '@Url.Action("SortFlowers", "Flowers")',
+            type: 'POST',
+            data: { priceSort: priceSort },
+            success: function (result) {
+                $('#flowerContainer').html(result);  
+            },
+            error: function () {
+                console.error('Lỗi khi tải danh sách hoa.');
+            }
         });
-
-        function showAlert(message, type) {
-            const alertDropdown = $('#alert-dropdown');
-            alertDropdown.removeClass('success error').addClass(type);
-            alertDropdown.find('.alert-content').text(message);
-            alertDropdown.fadeIn();
-
-            setTimeout(function () {
-                alertDropdown.fadeOut();
-            }, 3000);
-        }
     });
 </script>
-

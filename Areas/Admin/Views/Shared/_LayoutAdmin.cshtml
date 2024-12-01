@@ -9,6 +9,7 @@
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/shopflowerproject.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <style>
     .bdr-3 {
@@ -18,220 +19,79 @@
     .max-height {
         height: 30px;
     }
-
-    .navbar.fixed {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1030;
-    }
-
-    body {
-        padding-top: 60px;
-    }
 </style>
+<body class="" id="">
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
+                <div class="sidebar-brand-icon">
+                    <img class="max-height bdr-3"
+                        src="https://drive.google.com/thumbnail?id=14u7A_cwcw5iCFlLALLXTFoekA1zQ9NXl&sz=w1000" alt="">
+                </div>
+                <div class="sidebar-brand-text mx-3">Dash Board</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" asp-area="Admin" asp-controller="HomeAdmin" asp-action="Index">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Overview</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Manage
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="HomeAdmin" asp-action="ManageAccount">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Account</span>
+                </a>
+                <a class="nav-link collapsed" asp-area="Admin" asp-controller="HomeAdmin" asp-action="ManageFlowers">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Flowers</span>
+                </a>
+            </li>
+            <!-- Divider -->
 
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img class="max-height"
-                        src="https://drive.google.com/thumbnail?id=14u7A_cwcw5iCFlLALLXTFoekA1zQ9NXl&sz=w1000"
-                        alt=""></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="HomeAdmin" asp-action="Charts">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span></a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle">
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="AboutUs">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Contact">Contact</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Flowers
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Hoa Hồng</a></li>
-                                <li><a class="dropdown-item" href="#">Hoa Hướng Dương</a></li>
-                                <li><a class="dropdown-item" href="#">Sen Đá</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
             </div>
-        </nav>
-    </header>
-
-    <body class="page-top" id="page">
-        <div id="wrapper">
-
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-                    <div class="sidebar-brand-icon">
-                        <img class="max-height bdr-3"
-                            src="https://drive.google.com/thumbnail?id=14u7A_cwcw5iCFlLALLXTFoekA1zQ9NXl&sz=w1000"
-                            alt="">
-                    </div>
-                    <div class="sidebar-brand-text mx-3">Dash Board</div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Overview</span></a>
-                </li>
-
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Manage
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Account</span>
-                    </a>
-                    <a class="nav-link collapsed" href="#">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Flowers</span>
-                    </a>
-                </li>
-                <!-- Divider -->
 
 
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span></a>
-                </li>
-
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle">
-                    </button>
-                </div>
-
-
-            </ul>
-            @RenderBody()
-        </div>
-    </body>
-    <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
-        <section class="d-flex justify-content-between p-4" style="background-color: #6351ce">
-            <div class="me-5">
-                <span>Get connected with us on social networks:</span>
-            </div>
-            <div>
-                <a href="https://www.facebook.com/profile.php?id=100011449100056" class="text-white me-4">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="" class="text-white me-4">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="" class="text-white me-4">
-                    <i class="fab fa-google"></i>
-                </a>
-                <a href="https://www.instagram.com/trong31_14/" class="text-white me-4">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="" class="text-white me-4">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="" class="text-white me-4">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-        </section>
-        <section class="">
-            <div class="container text-center text-md-start mt-5">
-                <div class="row mt-3">
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                        <h6 class="text-uppercase fw-bold">Sang Trọng</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p>
-                            Ở đây có tất cả loại hoa bạn cần
-                        </p>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                        <h6 class="text-uppercase fw-bold">Products</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p>
-                            <a href="" class="text-white">Hoa Tặng Sinh Nhật</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">Hoa Cưới</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">Hoa Cầu Hôn</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">Hoa Dịp Lễ</a>
-                        </p>
-                    </div>
-                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-
-                        <h6 class="text-uppercase fw-bold">Useful links</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p>
-                            <a href="https://www.facebook.com/profile.php?id=100011449100056"
-                                class="text-white">Facebook</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">Become an Affiliate</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">Shipping Rates</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">Help</a>
-                        </p>
-                    </div>
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                        <h6 class="text-uppercase fw-bold">Contact</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
-                            style="width: 60px; background-color: #7c4dff; height: 2px" />
-                        <p><i class="fas fa-home mr-3"></i>Tân Phú,HCM City</p>
-                        <p><i class="fas fa-envelope mr-3"></i> nguyensangtrong3114@gmail.com</p>
-                        <p><i class="fas fa-phone mr-3"></i> +84 379 723 024</p>
-                        <p><i class="fas fa-print mr-3"></i> +84 379 723 024</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </footer <script src="~/lib/jquery/dist/jquery.min.js">
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        </ul>
+        @RenderBody()
+    </div>
 </body>
+<footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
+</footer <script src="~/lib/jquery/dist/jquery.min.js">
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)

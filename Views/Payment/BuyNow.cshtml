@@ -7,6 +7,7 @@
     integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
     body {
         margin-top: 20px;
@@ -264,14 +265,14 @@
                                     <h5 class="font-size-16 mb-1">Billing Info</h5>
                                     <p class="text-muted text-truncate mb-4">Sed ut perspiciatis unde omnis iste</p>
                                     <div class="mb-3">
-                                        <form asp-controller="Payment" asp-action="FillInfo" method="post">
+                                        <form>
                                             <div>
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="billing-name">Name</label>
                                                             <input type="text" class="form-control" id="billing-name"
-                                                                name="Name" placeholder="Enter name" required>
+                                                                placeholder="Enter name">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -279,33 +280,32 @@
                                                             <label class="form-label" for="billing-email-address">Email
                                                                 Address</label>
                                                             <input type="email" class="form-control"
-                                                                id="billing-email-address" name="Email"
-                                                                placeholder="Enter email">
+                                                                id="billing-email-address" placeholder="Enter email">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
                                                             <label class="form-label" for="billing-phone">Phone</label>
                                                             <input type="text" class="form-control" id="billing-phone"
-                                                                name="Phone" placeholder="Enter Phone no." required>
+                                                                placeholder="Enter Phone no.">
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label class="form-label" for="billing-address">Address</label>
-                                                    <textarea class="form-control" id="billing-address" name="Address"
-                                                        rows="3" placeholder="Enter full address"></textarea>
+                                                    <textarea class="form-control" id="billing-address" rows="3"
+                                                        placeholder="Enter full address"></textarea>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="col-lg-4">
                                                         <div class="mb-4 mb-lg-0">
                                                             <label class="form-label">Country</label>
-                                                            <select class="form-control form-select" name="Country"
-                                                                title="Country">
+                                                            <select class="form-control form-select" title="Country">
                                                                 <option value="0">Select Country</option>
                                                                 <option value="VN">Việt Nam</option>
+
                                                             </select>
                                                         </div>
                                                     </div>
@@ -314,7 +314,7 @@
                                                         <div class="mb-4 mb-lg-0">
                                                             <label class="form-label" for="billing-city">City</label>
                                                             <input type="text" class="form-control" id="billing-city"
-                                                                name="City" placeholder="Enter City">
+                                                                placeholder="Enter City">
                                                         </div>
                                                     </div>
 
@@ -323,14 +323,9 @@
                                                             <label class="form-label" for="zip-code">Zip / Postal
                                                                 code</label>
                                                             <input type="text" class="form-control" id="zip-code"
-                                                                name="ZipCode" placeholder="Enter Postal code">
+                                                                placeholder="Enter Postal code">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="billing-address">Note</label>
-                                                    <textarea class="form-control" id="billing-address" name="Note"
-                                                        rows="3" placeholder="Enter full Note"></textarea>
                                                 </div>
                                             </div>
                                         </form>
@@ -388,26 +383,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4 col-sm-6">
-                                                <div>
-                                                    <label class="card-radio-label mb-0">
-                                                        <input type="radio" name="address" id="info-address2"
-                                                            class="card-radio-input card-radio-input-delivery"
-                                                            value="70000">
-                                                        <div class="card-radio text-truncate p-3">
-                                                            <span class="fs-14 mb-4 d-block">Giao Hàng Cồng Kềnh</span>
-                                                            <span class="fs-14 mb-2 d-block">Áp dụng từ 5 Hoa trở
-                                                                lên</span>
-                                                            <span
-                                                                class="text-muted fw-normal text-wrap mb-1 d-block">Nhận
-                                                                hàng trong vòng 24h</span>
-                                                            <span class="text-muted fw-normal d-block">70.000
-                                                                VNĐ</span>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -466,20 +441,8 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
-                                                   <div class="row my-3">
-                    <div class="col">
-                        <a asp-controller="Flowers" asp-action="Flowers" class="btn btn-link text-muted">
-                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-                    </div>
-                    <div class="col">
-                        <div class="text-end p-1 mt-sm-0">
-                            <a asp-area="" asp-controller="Payment" asp-action="Success" class="btn btn-success">
-                                <i class="mdi mdi-cart-outline me-1"></i> Procced </a>
-                        </div>
-                    </div>
-                </div>
                                 </div>
                             </div>
                         </li>
@@ -507,11 +470,11 @@
                                 @foreach (var flower in Model.Flowers)
                                 {
                                     <tr>
-                                        <th scope="row"><img src="@flower.HinhAnh" alt="product-img" title="product-img"
+                                        <th scope="row"><img src="@flower.HinhAnh" alt="@flower.MaHoa" title="product-img"
                                                 class="avatar-lg rounded"></th>
                                         <td>
                                             <h5 class="font-size-16 text-truncate"><a href="#"
-                                                    class="text-dark">@flower.TenHoa</a></h5>
+                                                    class="text-dark">@flower.TenHoa @flower.MaHoa</a></h5>
                                             @* <p class="text-muted mb-0">
                                         <i class="bx bxs-star text-warning"></i>
                                         <i class="bx bxs-star text-warning"></i>
@@ -520,63 +483,75 @@
                                         <i class="bx bxs-star-half text-warning"></i>
                                         </p> *@
                                             <p class="text-muted mb-0 mt-1">@flower.GiaBan.ToString("#,0", new
-                                            System.Globalization.CultureInfo("vi-VN")) x @flower.SoLuong</p>
+                                            System.Globalization.CultureInfo("vi-VN"))</p>
                                         </td>
-                                        <td>@(flower.GiaBan * flower.SoLuong) VNĐ</td>
+                                        <td>@flower.GiaBan VNĐ</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <h5 class="font-size-14 m-0">Sub Total :</h5>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h5 class="font-size-14 m-0">Discount :</h5>
+                                        </td>
+                                        <td>
+                                            - $ 78
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <h5 class="font-size-14 m-0">Shipping Charge :</h5>
+                                        </td>
+                                        <td>
+                                            $ 25
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h5 class="font-size-14 m-0">Estimated Tax :</h5>
+                                        </td>
+                                        <td>
+                                            $ 18.20
+                                        </td>
+                                    </tr>
+
+                                    <tr class="bg-light">
+                                        <td colspan="2">
+                                            <h5 class="font-size-14 m-0">Total:</h5>
+                                        </td>
+                                        <td>
+                                            <p><span id="totalAmount">@(Model.ThanhTien + Model.ThanhToan) VNĐ</span></p>
+                                            <input type="hidden" id="MaHoa123" value="@flower.MaHoa">
+                                            <input type="hidden" id="shippingCost"
+                                                value="@(Model.ThanhTien + Model.ThanhToan)" />
+                                        </td>
                                     </tr>
                                 }
-                                <tr>
-                                    <td colspan="2">
-                                        <h5 class="font-size-14 m-0">Sub Total :</h5>
-                                    </td>
-                                    <td>
-                                        @Model.ThanhTien.Value.ToString("#,0", new
-                                                 System.Globalization.CultureInfo("vi-VN")) VNĐ
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <h5 class="font-size-14 m-0">Discount :</h5>
-                                    </td>
-                                    <td class="" id="cartTotal">
-                                        0
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="2">
-                                        <h5 class="font-size-14 m-0">Shipping Charge :</h5>
-                                    </td>
-                                    <td>
-                                        <span id="shippingCost">25.000 VNĐ</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <h5 class="font-size-14 m-0">Estimated Tax :</h5>
-                                    </td>
-                                    <td>
-                                        0
-                                    </td>
-                                </tr>
-
-                                <tr class="bg-light">
-                                    <td colspan="2">
-                                        <h5 class="font-size-14 m-0">Total:</h5>
-                                    </td>
-                                    <td>
-                                        <p><span id="totalAmount">@(Model.ThanhTien + Model.ThanhToan) VNĐ</span></p>
-
-                                        <input type="hidden" id="shippingCost"
-                                            value="@(Model.ThanhTien + Model.ThanhToan)" />
-                                    </td>
-                                </tr>
                             </tbody>
 
                         </table>
 
                     </div>
 
+                </div>
+                <div class="row my-3">
+                    <div class="col">
+                        <a asp-controller="Flowers" asp-action="Flowers" class="btn btn-link text-muted">
+                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                    </div>
+                    <div class="col">
+                        <div class="text-end p-1 mt-sm-0">
+                            <a href="#" class="btn btn-success">
+                                <i class="mdi mdi-cart-outline me-1"></i> Procced </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -585,42 +560,46 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const checkedRadio = document.querySelector('.card-radio-input-delivery:checked');
-        if (checkedRadio) {
+        const MaHoa = document.querySelector('#MaHoa123') ? document.querySelector('#MaHoa123').value : null;
+        console.log("MaHoa: ", MaHoa); // Kiểm tra giá trị MaHoa
+        if (checkedRadio && MaHoa) {
             const initialShippingCost = parseFloat(checkedRadio.value);
-            if (!isNaN(initialShippingCost)) {
-                updateTotalAmount(initialShippingCost);
-                document.getElementById('shippingCost').value = initialShippingCost;
-                document.getElementById('shippingCost').innerText = initialShippingCost.toLocaleString('vi-VN') + ' VNĐ';
-            }
+            updateTotalAmount(MaHoa, initialShippingCost);
         }
     });
 
+
     document.querySelectorAll('.card-radio-input-delivery').forEach(radio => {
         radio.addEventListener('change', function () {
-            if (this.checked) {
+            const MaHoa = document.querySelector('#MaHoa123') ? document.querySelector('#MaHoa123').value : null;
+            if (MaHoa && this.checked) {
                 const shippingCost = parseFloat(this.value);
-                if (!isNaN(shippingCost)) {
-                    updateTotalAmount(shippingCost);
-                    // Định dạng giá trị và hiển thị
-                    document.getElementById('shippingCost').value = shippingCost;
-                    document.getElementById('shippingCost').innerText = shippingCost.toLocaleString('vi-VN') + ' VNĐ';
-                }
+                updateTotalAmount(MaHoa, shippingCost);
+            } else {
+                console.error("Không tìm thấy MaHoa hoặc giá trị không hợp lệ");
             }
         });
     });
 
-    function updateTotalAmount(shippingCost) {
-        $.ajax({
-            url: '@Url.Action("UpdateTotalAmount", "Payment")',
-            type: 'POST',
-            data: { shippingCost: shippingCost },
-            success: function (response) {
-                // Định dạng tổng giá trị
-                $('#totalAmount').text(response.totalAmount.toLocaleString('vi-VN') + ' VNĐ');
-            },
-            error: function (error) {
-                console.log('Có lỗi khi tính toán tổng giá trị.', error);
+
+function updateTotalAmount(MaHoa, shippingCost) {
+    $.ajax({
+        url: '@Url.Action("UpdateBuyNowPrice", "Payment")',
+        type: 'POST',
+        data: { MaHoa: MaHoa, shippingCost: shippingCost },
+        success: function (response) {
+            console.log(response); 
+            
+            if (response && response.totalAmount !== undefined) {
+                $('#totalAmount').text(response.totalAmount + ' VNĐ');
+            } else {
+                alert('Không nhận được giá trị totalAmount từ server.');
             }
-        });
-    }
+        },
+        error: function (error) {
+            console.log('Có lỗi khi tính toán tổng giá trị.', error);
+        }
+    });
+}
+
 </script>

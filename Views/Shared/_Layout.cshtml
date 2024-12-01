@@ -14,6 +14,11 @@
             height: 30px;
         }
 
+        .hidding {
+            border: none;
+            background: none;
+        }
+
         .navbar.fixed {
             position: fixed;
             top: 0;
@@ -62,6 +67,27 @@
         .box a .fas {
             color: #1daf font-size: 18px;
         }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            /* Đặt vị trí của thông báo */
+            left: 100%;
+            /* Bắt đầu từ ngoài màn hình */
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            white-space: nowrap;
+            transition: left 10s ease-in-out;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            left: 0;
+            /* Di chuyển vào trong màn hình */
+        }
     </style>
 </head>
 
@@ -96,52 +122,53 @@
                                 Flowers
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" asp-route-category="HT001" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Hồng</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT002" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Cúc</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT003" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Ly</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT004" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Lan</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT005" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Huớng Dương</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT006" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Linh Lan</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT007" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Cẩm Tú Cầu</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT008" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Loa Kèn</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT009" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Thiên Ðiểu</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT010" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Cát Tuờng</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT011" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Anh Ðào</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT012" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Tulip</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT013" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Tigon</a></li>
-                                <li><a class="dropdown-item" asp-route-category="HT014" asp-controller="Flowers"
-                                        asp-action="FlowersByCategory">Hoa Mẫu Ðơn</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT001"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Hồng</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT002"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Cúc</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT003"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Ly</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT004"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Lan</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT005"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Huớng Dương</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT006"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Linh Lan</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT007"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Cẩm Tú Cầu</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT008"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Loa Kèn</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT009"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Thiên Ðiểu</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT010"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Cát Tuờng</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT011"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Anh Ðào</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT012"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Tulip</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT013"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Tigon</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-category="HT014"
+                                        asp-controller="Flowers" asp-action="FlowersByCategory">Hoa Mẫu Ðơn</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" asp-controller="Flowers" asp-action="Flowers"
-                                id="navbarDropdown" role="button" data-bs-toggle="" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" asp-area="" asp-controller="Flowers"
+                                asp-action="Flowers" id="navbarDropdown" role="button" data-bs-toggle=""
+                                aria-expanded="false">
                                 Occasions
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" asp-route-occasion="DMX123" asp-controller="Flowers"
-                                        asp-action="FlowersByOccasion">Kỉ Niệm</a></li>
-                                <li><a class="dropdown-item" asp-route-occasion="DMY456" asp-controller="Flowers"
-                                        asp-action="FlowersByOccasion">Chia Buồn</a></li>
-                                <li><a class="dropdown-item" asp-route-occasion="DMZ789" asp-controller="Flowers"
-                                        asp-action="FlowersByOccasion">Chúc Mừng</a></li>
-                                <li><a class="dropdown-item" asp-route-occasion="DMA321" asp-controller="Flowers"
-                                        asp-action="FlowersByOccasion">Đám Cưới</a></li>
-                                <li><a class="dropdown-item" asp-route-occasion="DMB654" asp-controller="Flowers"
-                                        asp-action="FlowersByOccasion">Sinh Nhật</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-occasion="DMX123"
+                                        asp-controller="Flowers" asp-action="FlowersByOccasion">Kỉ Niệm</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-occasion="DMY456"
+                                        asp-controller="Flowers" asp-action="FlowersByOccasion">Chia Buồn</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-occasion="DMZ789"
+                                        asp-controller="Flowers" asp-action="FlowersByOccasion">Chúc Mừng</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-occasion="DMA321"
+                                        asp-controller="Flowers" asp-action="FlowersByOccasion">Đám Cưới</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-route-occasion="DMB654"
+                                        asp-controller="Flowers" asp-action="FlowersByOccasion">Sinh Nhật</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -149,16 +176,21 @@
                         </li>
                     </ul>
                     <div class="box m-1">
-                        <input type="text" placeholder="Search...">
-                        <a href="#">
-                            <i class="fas fa-search"></i>
-                        </a>
+                        <form action="/find" method="GET">
+                            <input type="text" name="query" placeholder="Vui lòng nhập tên hoa">
+                            <button type="submit" class="hidding">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
                     </div>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
+    <div id="notification" class="notification">
+        Đăng nhập để sở hữu nhiều chương trình ưu đãi hơn
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -201,7 +233,7 @@
                             Ở đây có tất cả loại hoa bạn cần
                         </p>
                         <p>
-                           <a asp-controller="Home" asp-action="Privacy">Coppy right</a>
+                            <a asp-controller="Home" asp-action="Privacy">Coppy right</a>
                         </p>
                     </div>
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
@@ -263,6 +295,26 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 <script>
+    window.onload = function () {
+        var lastShownTime = localStorage.getItem('notificationShownTime');
+        var currentTime = new Date().getTime();
+
+        if (!lastShownTime || currentTime - lastShownTime > 45 * 60 * 1000) {
+            var notification = document.getElementById('notification');
+
+            setTimeout(function () {
+                notification.classList.add('show');
+            }, 1000); 
+
+            localStorage.setItem('notificationShownTime', currentTime);
+
+
+            setTimeout(function () {
+                notification.classList.remove('show');
+            }, 7000);
+        }
+    };
+
 
 </script>
 
